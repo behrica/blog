@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  Mapping EFSA's food consumption data
+title:  Mapping EFSA's food consumption data with tmap
 date: "`r Sys.time()`"
 published: true
 tags: [food consumption data, maps, EFSA]
