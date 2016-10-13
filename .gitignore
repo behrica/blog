@@ -3,3 +3,9 @@
 .RData
 _site/
 .sass-cache/
+cache/
+*.log
+metastore_db/
+figure/
+*.html
+chronicgdaytotpop.xlsx
