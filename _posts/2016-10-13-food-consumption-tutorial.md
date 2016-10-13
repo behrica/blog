@@ -1,9 +1,9 @@
 ---
 layout: post
 title:  Mapping EFSA's food consumption data
-date: "2016-10-13 11:55:42"
+date: "2016-10-13 14:50:00"
 published: true
-tags: [food consumption data, maps]
+tags: [food consumption data, maps, EFSA]
 ---
 
 
