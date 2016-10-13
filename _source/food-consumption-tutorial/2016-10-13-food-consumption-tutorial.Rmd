@@ -27,7 +27,7 @@ fixCountries <- function(data) {
 ```
 
 # EFSA Food consumption data
-The European Food Safety Authority collects food consumption data from all EU countries and and integrates them in their database. The data is based on country specific surveys, in which individuals get interviewed about their food consumption habits. This data is used for EFSAs risk assessments as part of the exposure assessment.
+The European Food Safety Authority collects food consumption data from all EU countries and and integrates them in their database. The data is based on country specific surveys, in which individuals get interviewed about their food consumption habits. This data is used for EFSA's risk assessments as part of the exposure assessment.
 
 # Accessing the data
 The data is available from EFSA's website http://www.efsa.europa.eu/en/food-consumption/comprehensive-database in form of Excel files.
@@ -45,7 +45,7 @@ if (!file.exists("chronicgdaytotpop.xlsx"))
   
 ```
 
-I use Spar to proces the data. This would not be needed, but I liked to try it.
+I use Spark to process the data. This would not be needed, but I liked to try it.
 
 ```{r}
 library(sparklyr)
@@ -129,7 +129,7 @@ jam <- data %>% filter(Foodex_L4=='Jam') %>%
  
 ```
 
-The data is now in a format, ready to be presented in a pan european map, having a single value per country.
+The data is now in a format, ready to be presented in a pan European map, having a single value per country.
 
 ```{r results='asis'}
 knitr::kable(jam)
