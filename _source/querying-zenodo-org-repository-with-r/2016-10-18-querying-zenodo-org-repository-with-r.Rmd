@@ -1,0 +1,147 @@
+---
+layout: post
+title:  Querying Zenodo.org repository with R
+date: "`r Sys.time()`"
+published: true
+tags: [OAI-PMH, zenodo]
+
+
+liftr:
+  from: rocker/hadleyverse
+  pandoc: false
+  cranpkg:
+    - oai
+  maintainer: Carsten Behring
+  maintainer_email: carsten.behring@gmail.com
+---
+
+# Zenodo 
+Zenodo is a repository which allows everybody to deposit free of charge any type of research output, in all disciplines of science.
+
+EFSA is piloting it's use for creating a knowledge base on all types of food safety related evidence(data, documents, models).
+
+Zenodo has an API and can be queried using the standart OAI-PMH prototol,
+
+# 'oai' package 
+
+R has a package available to query any OAI-PMH repository, including Zenodo.
+It can be installed from CRAN like this:
+
+```{r eval=FALSE}
+install.packages("oai")
+```
+
+The develoment version is available on Gihub at 
+https://github.com/ropensci/oai
+
+
+
+```{r echo=TRUE,message=FALSE,warning=FALSE}
+library(knitr)
+library(tidyverse)
+library(httr)
+library(oai)
+library(xml2)
+opts_chunk$set(echo=T)
+
+```
+
+# Retreive records from Zenodo
+
+The oai package  allows to retrieve all records of a given Zenodo community, in this case the EFSA pilot community.
+The folloin shows all records with their digital object identifier and the title. 
+
+```{r cache=TRUE}
+record_list<- list_records("https://zenodo.org/oai2d",metadataPrefix="oai_datacite",set="user-efsa-pilot")
+
+kable(record_list %>% select(identifier.3,title))
+
+```
+
+Currently there are `r nrow(record_list)` records available.
+
+## Statistics on keywords
+
+I was futher on intetrested in the current distribution of keywords each record was tagged with. Zenodo suports two types of keywords. Simple free text keywords and 'subjects'.
+Subjetcs need to come from  a controled vocabulary, in which each topic has an URI.
+
+EFSA uses the GACS vocabulary, and so a certain topic is represented as for example 'http://browser.agrisemantics.org/gacs/en/page/C2225' is the code for 'salmonella'.
+
+The API retunts therefore for the subjects only the code, which is nicely unique and clear but not user friendly.
+
+The following code retrieves all records and extract all their subjects (which have a Xpath of //d3:subject).
+
+I use the 'map' function from the purrr package to apply to every vector in the result (which is first an xml string) a number of transformations:
+
+1.  read_xml() - to convert from string to class xml_document
+2.  xml_find_all() - to find xml nodes give by xpath expression
+3.  xml_text() - get the text from inside the xml node
+ 
+ Then I combine all this via c() and the reduce() function to a single list of all subjetcs.
+ The table() command produces then a frequency table for them:
+ 
+ 
+
+```{r cache=TRUE}
+
+
+record_data_xml <- get_records(record_list$identifier,url="https://zenodo.org/oai2d",prefix="oai_datacite",as="raw")  
+keyword_counts <- record_data_xml %>%
+    map(read_xml) %>%
+    map(xml_find_all,"//d3:subject") %>%
+    map(xml_text) %>%
+    reduce(c) %>%
+    table() %>%
+    tbl_df()
+kable(keyword_counts[10:20,])
+```
+
+To add a human readable label to each GACS URI, I use the gacs API which allows to query information on each topic.
+So I call the API for each URI and make a table where each row contains a list of (URI,label). This gets the converted into a table with bind_rows()
+
+                                        
+```{r cache=TRUE}
+gacs <- keyword_counts %>% filter(grepl("*gacs*",.))
+
+gacs_label_en <- map(gacs$`.`,function(uri) {
+
+
+    r=GET("http://browser.agrisemantics.org/rest/v1/gacs/label",query=list(uri=uri,lang="en"))
+    list(uri=uri,label=content(r)$prefLabel)
+    
+}) %>%
+    bind_rows()
+kable(gacs_label_en[1:5,])
+```
+
+## Distributions of labels in efsa-pilot community
+
+To get the final table, I join the label-GACS pairs with the former table and do some clean-up with the 
+functions from tidyr package.
+
+The table is then sorted by frequency and shown on the screen.
+
+As we can see, the most frequent words are 'risk assesment' and 'exposure assement', which is no surprise as these is the core of EFSA's
+scientific work.
+
+```{r}
+
+table <- left_join(keyword_counts,gacs_label_en,by=c("."="uri")) %>% 
+  replace_na(list(label="")) %>%
+  unite("label",c(label,`.`),sep=" - ") %>%
+  mutate(label = gsub("^ - ","",label)) %>%
+  rename(count=n) %>%
+  arrange(-count)
+
+write.csv(table,"keywords.csv",row.names = F)
+knitr::kable(table %>% slice(1:20))
+
+    
+```
+
+# session info
+```{r}
+sessionInfo()
+```
+
+
