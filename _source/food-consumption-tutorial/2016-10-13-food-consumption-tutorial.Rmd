@@ -1,30 +1,49 @@
 ---
+title: "Mapping EFSA's food consumption data with tmap"
 layout: post
-title:  Mapping EFSA's food consumption data with tmap
-date: "`r Sys.time()`"
-published: true
-tags: [food consumption data, maps, EFSA]
+date: '`r Sys.time()`'
+published: yes
+tags:
+- food consumption data
+- maps
+- EFSA
+liftr:
+  cranpkg: tmap
+  from: rocker/hadleyverse
+  maintainer: Carsten Behring
+  maintainer_email: carsten.behring@gmail.com
+  pandoc: no
 ---
 
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(cache = T,echo = TRUE, fig.height=15, fig.width=15, dev='png',
+knitr::opts_chunk$set(cache = F,
+                      echo = TRUE, 
+                      fig.height=15, fig.width=15, dev='png',
                       warning = F,
                       message = F)
-library(readxl)
-library(dplyr)
+
+
 library(tmap)
-library(tidyr)
+library(tidyverse)
 library(knitr)
-library(ggplot2)
-data("Europe")
-tmap_mode("plot")
+library(readxl)
+
+data(Europe)
+
 
 fixCountries <- function(data) {
   data %>% 
      mutate(Country=ifelse(Country=='Czech Republic','Czech Rep.',Country))
 } 
 ```
+
+# Disclaimer
+
+*The opinions expressed in the article are those of the author(s) only,
+and may not necessarily represent the views of EFSA or of any other EU
+Institution or body.*
+
 
 # EFSA's food consumption data
 The European Food Safety Authority collects food consumption data from all EU countries and and integrates them in their database. The data is based on country specific surveys, in which individuals get interviewed about their food consumption habits. This data is used for EFSA's risk assessments as part of the exposure assessment.
@@ -37,6 +56,8 @@ I selected for this tutorial the file of the "Chronic food consumption statistic
 The following code reads the data from the EFSA website and writes it to a local file.
 The file contains 4 sheets and we select the last one, which contains data on the lowest foodex level 4.
 
+First download and cache it,
+
 ```{r}
 
 if (!file.exists("chronicgdaytotpop.xlsx"))
@@ -45,13 +66,7 @@ if (!file.exists("chronicgdaytotpop.xlsx"))
   
 ```
 
-I use Spark to process the data. This would not be needed, but I liked to try it.
-
-```{r}
-library(sparklyr)
-library(dplyr)
-sc <- spark_connect(master = "local")
-```
+and the read it into R.
 
 ```{r,warning=FALSE}
 data <- read_excel("./chronicgdaytotpop.xlsx","L4_All_subjects_g_day",skip=2) 
@@ -59,7 +74,6 @@ names(data) <- gsub(x = names(data),
                         pattern = "[[:space:]]|[[:punct:]]",
                         replacement = "_",
                     perl = F)
-data <- copy_to(sc,data,overwrite = T)
 data <- data %>%
   fixCountries
   
@@ -70,7 +84,7 @@ data <- data %>%
 
 
 The data is organised 'per country', 'per survey','per population class' and 'per food group'.
-The food classification follows the Foodex standard developed by EFSA, which is a hierarchical system for classifying food.
+The food classification follows the Foodex[^1] standard developed by EFSA, which is a hierarchical system for classifying food.
 The current data set contains the most detailed foodex levels (3 and 4)
 
 The 'Mean' column contains then the mean consumption in grams per day of this food among the participants of the survey. Additionally to the mean other statistics about the distribution of the food intake are given (standard deviation, percentiles)
@@ -78,7 +92,9 @@ The 'Mean' column contains then the mean consumption in grams per day of this fo
 We can interpret a single row, such as:
 
 ```{r}
-data %>% filter(Foodex_L4 == 'Couscous') %>% filter(row_number()==1) %>% glimpse
+data %>% filter(Foodex_L4 == 'Couscous') %>% 
+  filter(row_number()==1) %>% 
+  glimpse
 ```
 in the following way:
 
@@ -121,6 +137,8 @@ For mapping purposes we can now decide which food group we want to use, 'Jam' in
 
 This is good enough for illustrative purposes, but a exposure assessment based on this data needed to find a more sophisticated strategy in order to consider methodological differences between the studies.
 
+A more detailed explained on how to use this data, see EFSA's website.[^2]
+
 
 ```{r}
 jam <- data %>% filter(Foodex_L4=='Jam') %>% 
@@ -140,8 +158,9 @@ It comes already with a shape file of Europe.
 First we will restrict it to EU countries:
 
 ```{r}
-data(Europe)
-Europe.eu <- Europe[Europe$EU_Schengen %in% c("EU Schengen","EU Schengen cand.","EU Non-Schengen"),]
+
+Europe.eu <- Europe[Europe$EU_Schengen %in% c("EU Schengen","EU Schengen cand.",
+                                              "EU Non-Schengen"),]
  
 ```
 
@@ -337,18 +356,16 @@ tm_shape(Europe.eu.veg) +
 ```
 
 
-
+# References
+[^1]: <http://www.efsa.europa.eu/en/supporting/pub/804e>
+[^2]: <http://www.efsa.europa.eu/en/food-consumption/comprehensive-database>
 # session info
-
-```{r}
-spark_disconnect_all()
-```
-
 
 The following R library versions were used for this tutorial.
 
 ```{r}
 sessionInfo()
 ```
+
 
 
