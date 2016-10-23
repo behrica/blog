@@ -316,17 +316,12 @@ In such a map the user can:
 
 
 ```{r fig.height=6, fig.width=6}
-# if (opts_knit$get()$rmarkdown.pandoc.to == 'html') {
-#   tmap_mode("view")
-# } else {
-#   tmap_mode("plot")
-# }  
 tm_shape(Europe.jam) +
   tm_polygons(col='food_mean',title = "Jam consumption (mg/day)") +
 tm_shape(Europe.surveyed) +
   tm_polygons("numSubjects",n = 10,title = "# individuals",palette="Blues") +
   tm_format_Europe_wide()
-tmap_mode("plot")
+
 ```
 
 # Who eats most vegetables ?  
@@ -356,9 +351,7 @@ tm_shape(Europe.eu.veg) +
 ```
 
 
-# References
-[^1]: <http://www.efsa.europa.eu/en/supporting/pub/804e>
-[^2]: <http://www.efsa.europa.eu/en/food-consumption/comprehensive-database>
+
 # session info
 
 The following R library versions were used for this tutorial.
@@ -367,5 +360,9 @@ The following R library versions were used for this tutorial.
 sessionInfo()
 ```
 
+# References
+
+[^1]: <http://www.efsa.europa.eu/en/supporting/pub/804e>
+[^2]: <http://www.efsa.europa.eu/en/food-consumption/comprehensive-database>
 
 
