@@ -1,7 +1,7 @@
 local({
   # fall back on '/' if baseurl is not specified
-  baseurl = servr:::jekyll_config('.', 'baseurl', '/')
-  knitr::opts_knit$set(base.url = baseurl)
+  #baseurl = servr:::jekyll_config('.', 'baseurl', '/')
+  #knitr::opts_knit$set(base.url = baseurl)
   # fall back on 'kramdown' if markdown engine is not specified
   markdown = servr:::jekyll_config('.', 'markdown', 'kramdown')
   # see if we need to use the Jekyll render in knitr
@@ -28,5 +28,17 @@ local({
     )
   }
   knitr::opts_knit$set(width = 70)
-  knitr::knit(a[1], a[2], quiet = F, encoding = 'UTF-8', envir = .GlobalEnv)
+  #knitr::knit(a[1], a[2], quiet = F, encoding = 'UTF-8', envir = .GlobalEnv)
+  filename_out <- basename(a[2])
+  dir_out <- dirname(a[2])
+
+  message(a[1])
+  message(filename_out)
+  message(dir_out)
+  rmarkdown::render(input=a[1],
+                    output_format = rmarkdown::html_document(),
+                    output_file = filename_out,
+                    output_dir = dir_out,
+                    encoding = "utf8")
+
 })
