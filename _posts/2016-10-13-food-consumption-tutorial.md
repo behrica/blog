@@ -1,7 +1,7 @@
 ---
 title: "Mapping EFSA's food consumption data with tmap"
 layout: post
-date: '2016-10-26 15:49:19'
+date: '2016-10-26 16:44:32'
 published: yes
 tags:
 - food consumption data
@@ -256,7 +256,7 @@ This map show, that France and Germany seems to be the top Jam consumers.
 
 ## A more advanced map
 
-We can easily add extra information to the map, like the ISO code of the countries, which are in column 'iso_a3' of the shape file. We do this by adding a text layer with 'tm_text', specifying which column of the shape file contains the textual ionformation to show.
+We can easily add extra information to the map, like the ISO code of the countries, which are in column 'iso_a3' of the shape file. We do this by adding a text layer with 'tm_text', specifying which column of the shape file contains the textual information to show.
 
 
 {% highlight r %}
@@ -386,7 +386,7 @@ kable(peopleSurveyed)
 |United Kingdom |        7480|
   
 This can be plotted as a bar chart, to compare easily the number of individuals surveyed.
-As we can see, there are large differences between them. Some nordic countries have each surveyed more then 5000 individuals, while others have below 1000. 
+As we can see, there are large differences between them. Some Nordic countries have each surveyed more then 5000 individuals, while others have below 1000. 
 
 
 {% highlight r %}
@@ -401,10 +401,10 @@ ggplot(peopleSurveyed) +
 ![plot of chunk unnamed-chunk-16](/r-blog/figure/source/food-consumption-tutorial/2016-10-13-food-consumption-tutorial/unnamed-chunk-16-1.png)
 
 The same data shown as map shows a rather clear difference between north and southern Europe.
-Does this mean that the (richer) nordic counties invest more money in food consumption surveys ?
+Does this mean that the (richer) Nordic countries invest more money in food consumption surveys ?
 Or is it related to population (only) ?
 
-A first hint to this question is to look at number of individuals together with GDP and polulation of a country.
+A first hint to this question is to look at number of individuals together with GDP and population of a country.
 
 
 
@@ -428,6 +428,9 @@ tm_shape(Europe.surveyed) +
 
 
 # Who eats most vegetables ?  
+
+By filtering data dependent on the highes L1 foodex level, we can get an glimpse on meat vs. non meat consumption in Europe.
+
 
 {% highlight r %}
 tmap_mode("plot")
