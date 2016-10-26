@@ -28,6 +28,7 @@ library(tmap)
 library(tidyverse)
 library(knitr)
 library(readxl)
+library(pander)
 
 data(Europe)
 
@@ -66,7 +67,8 @@ if (!file.exists("chronicgdaytotpop.xlsx"))
   
 ```
 
-and the read it into R.
+and the read it into R. The I fix a different spelling in the data versus the shape files to be 
+used later for the map.
 
 ```{r,warning=FALSE}
 data <- read_excel("./chronicgdaytotpop.xlsx","L4_All_subjects_g_day",skip=2) 
@@ -103,7 +105,7 @@ One group of '308' 'Adults' was surveyed and the 'Mean' food consumption of food
 
 # Analysis of standart deviation
 One interesting question on this data is, which food are distributed evenly, so most individuals eat them in similar proportions.
-One potential interpretation of those, is to say that these are the food which are 'eaten in all of Europe, in all ages'. 
+One potential interpretation of those, is to say that these are the food which are 'eaten in all of Europe, in all ages' in the same quantities.
 
 Lets find those with dplyr, like this:
 
@@ -116,7 +118,7 @@ stds <- data %>% group_by(Foodex_L4) %>%
 knitr::kable(stds)
 ```
 
-So it seems that the Europeans agree on eating similar portions of :
+So it seems that all Europeans agree on eating similar portions of :
 
 * salt
 * rice starch
@@ -184,10 +186,10 @@ zip("europe_jam_shp.zip",dir(".","europe_jam.*"))
 
 The 'key.shp' and 'key.data' parameter specify, on which columns the data and the shape file should be joined.
 
-# Showing a pan european map of food consumption
+# Showing a pan european map of food consumption data
 
-## simple map
-The data can now be shown on the screen as a simple map, containing  one layer which represents the mean food consumption of jam in the color of the countries polygon.
+## A simple map of one food item
+The data can now be shown on the screen as a simple map, containing  one layer which represents the mean food consumption of 'jam', where the quantity is represented as color of the country polygon, increasing the level of darkness of the color by increased consumption.
 
 ```{r}
 
@@ -196,9 +198,11 @@ tm_shape(Europe.jam) +
   tm_format_Europe_wide()
 ```
 
-## more advanced map
+This map show, that France and Germany seems to be the top Jam consumers.
 
-We can easily add extra information to the map, like the ISO code of the countries, which are in column 'iso_a3' of the shape file.
+## A more advanced map
+
+We can easily add extra information to the map, like the ISO code of the countries, which are in column 'iso_a3' of the shape file. We do this by adding a text layer with 'tm_text', specifying which column of the shape file contains the textual ionformation to show.
 
 ```{r}
 tm_shape(Europe.jam) +
@@ -210,7 +214,8 @@ tm_shape(Europe.jam) +
 ```
 
 
-## multiple maps
+## Showing multiple maps
+
 The following code shows one of the strength of using tmap, which is the very easy creation of multiple maps.
 Let's see how to show 4 maps, each with a different food.
 
@@ -225,7 +230,9 @@ food_data <- data %>%
   summarise(food_mean=mean(Mean,na.rm = T))
   
 food_data <- food_data %>% 
-  spread("Foodex_L4",'food_mean') 
+  spread("Foodex_L4",'food_mean') %>%
+  ungroup() %>%
+  mutate(Country=ifelse(Country=='Czech Republic','Czech Rep.',Country))
 
 ```
 
@@ -235,20 +242,20 @@ This results in a table, which has one column per food:
 knitr::kable(food_data)
 ```
 
-This can be converted into 4 maps, by just using a vector with the column names in the 'col' argument of tm_polygons:
-This will create one map for each column name in the vector.
+This new data frame will be merged with the shape file 
+
+```{r}
+Europe.4foods <- append_data(Europe.eu,as.data.frame(food_data),key.shp = 'name',key.data = "Country")
+
+```
+
+
+and then be plotted as 4 maps, by just using a vector with the column names in the 'col' argument of tm_polygons.
+This will plot one map for each column name in the vector.
 
 ```{r}
 
-
-food_data <- food_data %>% 
-  ungroup() %>%
-  mutate(Country=ifelse(Country=='Czech Republic','Czech Rep.',Country))
-
-Europe.4foods <- append_data(Europe.eu,as.data.frame(food_data),key.shp = 'name',key.data = "Country")
-
 tm_shape(Europe.4foods) + 
-  
   tm_polygons(col=c('Jam','Wheat grain','Couscous','Dried fruits'),n=3) +
   tm_format_Europe(legend.position = c("left","top"))
 
@@ -265,19 +272,19 @@ peopleSurveyed <- data %>%
   filter(row_number()==1) %>% 
   select(Country,Survey,Nr_Subjects,Pop_Class) %>% 
   group_by(Country) %>% 
-  summarise(numSubjects=sum(Nr_Subjects)) %>%
-  collect
+  summarise(numSubjects=sum(Nr_Subjects))
+  
 
 kable(peopleSurveyed)
 ```
-
+  
 This can be plotted as a bar chart, to compare easily the number of individuals surveyed.
-As we can see, there are large differences between them. Finland and Sweden have each surveyed more the 4000 individuals, while others have below 500. 
+As we can see, there are large differences between them. Some nordic countries have each surveyed more then 5000 individuals, while others have below 1000. 
 
 ```{r}
 ggplot(peopleSurveyed) +
-  geom_bar(aes(x=reorder(Country,numSubjects),
-               y=numSubjects), 
+  geom_bar(aes(x = reorder(Country,numSubjects),
+               y = numSubjects), 
            stat = 'identity'
           ) + 
   coord_flip()
@@ -285,6 +292,12 @@ ggplot(peopleSurveyed) +
 ```
 
 The same data shown as map shows a rather clear difference between north and southern Europe.
+Does this mean that the (richer) nordic counties invest more money in food consumption surveys ?
+Or is it related to population (only) ?
+
+A first hint to this question is to look at number of individuals together with GDP and polulation of a country.
+
+
 
 ```{r}
 
@@ -317,7 +330,7 @@ In such a map the user can:
 
 ```{r fig.height=6, fig.width=6}
 tm_shape(Europe.jam) +
-  tm_polygons(col='food_mean',title = "Jam consumption (mg/day)") +
+  tm_polygons(col = 'food_mean',title = "Jam consumption (mg/day)") +
 tm_shape(Europe.surveyed) +
   tm_polygons("numSubjects",n = 10,title = "# individuals",palette="Blues") +
   tm_format_Europe_wide()
