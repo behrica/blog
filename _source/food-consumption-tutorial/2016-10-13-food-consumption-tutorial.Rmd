@@ -341,6 +341,7 @@ Europe.eu.veg <- append_data(Europe.eu,veg.country,key.shp = "name",key.data = "
 tm_shape(Europe.eu.veg) + 
   tm_polygons(col='mean',palette='Greens',n = 10)
 ```
+
 # Interactive map
 
 Tmap has as well an interactive mode. To demonstrate it, we will now add two layers we have used before,'Jam consumption' and '# individuals surveyed' to the same interactive map.

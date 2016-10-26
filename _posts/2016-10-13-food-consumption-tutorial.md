@@ -1,7 +1,7 @@
 ---
 title: "Mapping EFSA's food consumption data with tmap"
 layout: post
-date: '2016-10-26 15:39:08'
+date: '2016-10-26 15:43:29'
 published: yes
 tags:
 - food consumption data
@@ -455,6 +455,7 @@ tm_shape(Europe.eu.veg) +
 {% endhighlight %}
 
 ![plot of chunk unnamed-chunk-19](/r-blog/figure/source/food-consumption-tutorial/2016-10-13-food-consumption-tutorial/unnamed-chunk-19-1.png)
+
 # Interactive map
 
 Tmap has as well an interactive mode. To demonstrate it, we will now add two layers we have used before,'Jam consumption' and '# individuals surveyed' to the same interactive map.
