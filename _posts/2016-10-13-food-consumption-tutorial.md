@@ -1,7 +1,7 @@
 ---
 title: "Mapping EFSA's food consumption data with tmap"
 layout: post
-date: '2016-10-26 15:47:18'
+date: '2016-10-26 15:49:19'
 published: yes
 tags:
 - food consumption data
@@ -461,6 +461,7 @@ tm_shape(Europe.eu.veg) +
 Tmap has as well an interactive mode. To demonstrate it, we will now add two layers we have used before,'Jam consumption' and '# individuals surveyed' to the same interactive map.
 
 In such a map the user can:
+
 * change background (online) map
 * zoom and drag the mp
 * select layers to see (Jam consumption,#individuals)
