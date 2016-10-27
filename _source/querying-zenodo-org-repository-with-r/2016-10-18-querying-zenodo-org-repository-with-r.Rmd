@@ -3,8 +3,10 @@ layout: post
 title:  Querying Zenodo.org repository with R
 date: "`r Sys.time()`"
 published: true
-tags: [OAI-PMH, zenodo]
-
+tags: 
+   - OAI-PMH 
+   - zenodo
+   - R
 
 liftr:
   from: rocker/hadleyverse
@@ -16,11 +18,11 @@ liftr:
 ---
 
 # Zenodo 
-Zenodo is a repository which allows everybody to deposit free of charge any type of research output, in all disciplines of science.
+[Zenodo](http://zenodo.org) is a repository which allows everybody to deposit free of charge any type of research output, in all disciplines of science.
 
 EFSA is piloting it's use for creating a knowledge base on all types of food safety related evidence(data, documents, models).
 
-Zenodo has an API and can be queried using the standart OAI-PMH prototol,
+Zenodo has an API and can be queried using the standard OAI-PMH protocol, which allows to harvest the metadata and all deposits.
 
 # 'oai' package 
 
@@ -31,7 +33,7 @@ It can be installed from CRAN like this:
 install.packages("oai")
 ```
 
-The develoment version is available on Gihub at 
+The development version is available on Github at 
 https://github.com/ropensci/oai
 
 
@@ -49,7 +51,7 @@ opts_chunk$set(echo=T)
 # Retreive records from Zenodo
 
 The oai package  allows to retrieve all records of a given Zenodo community, in this case the EFSA pilot community.
-The folloin shows all records with their digital object identifier and the title. 
+The following code shows all records of a community with their digital object identifier and the title. 
 
 ```{r cache=TRUE}
 record_list<- list_records("https://zenodo.org/oai2d",metadataPrefix="oai_datacite",set="user-efsa-pilot")
@@ -62,12 +64,12 @@ Currently there are `r nrow(record_list)` records available.
 
 ## Statistics on keywords
 
-I was futher on intetrested in the current distribution of keywords each record was tagged with. Zenodo suports two types of keywords. Simple free text keywords and 'subjects'.
-Subjetcs need to come from  a controled vocabulary, in which each topic has an URI.
+I was further on interested in the current distribution of keywords each record was tagged with. Zenodo supports two types of keywords. Simple free text keywords and 'subjects'.
+Subjects need to come from  a controlled vocabulary, in which each topic has an URI.
 
 EFSA uses the GACS vocabulary, and so a certain topic is represented as for example 'http://browser.agrisemantics.org/gacs/en/page/C2225' is the code for 'salmonella'.
 
-The API retunts therefore for the subjects only the code, which is nicely unique and clear but not user friendly.
+The API returns therefore for the subjects only the code, which is nicely unique and clear but not user friendly.
 
 The following code retrieves all records and extract all their subjects (which have a Xpath of //d3:subject).
 
@@ -77,7 +79,7 @@ I use the 'map' function from the purrr package to apply to every vector in the 
 2.  xml_find_all() - to find xml nodes give by xpath expression
 3.  xml_text() - get the text from inside the xml node
  
- Then I combine all this via c() and the reduce() function to a single list of all subjetcs.
+ Then I combine all this via c() and the reduce() function to a single list of all subjects.
  The table() command produces then a frequency table for them:
  
  
@@ -121,7 +123,7 @@ functions from tidyr package.
 
 The table is then sorted by frequency and shown on the screen.
 
-As we can see, the most frequent words are 'risk assesment' and 'exposure assement', which is no surprise as these is the core of EFSA's
+As we can see, the most frequent words are 'risk assessment' and 'exposure assessment', which is no surprise as these is the core of EFSA's
 scientific work.
 
 ```{r}
