@@ -12,4 +12,4 @@ Personal blog on several topics of interest to me:
 - Food safety
 
 The text and R code for all blog posts is available on github:
-https://github.com/behrica/r-blog
+https://github.com/behrica/blog
