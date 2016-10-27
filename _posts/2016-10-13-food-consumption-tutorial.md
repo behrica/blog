@@ -1,7 +1,7 @@
 ---
 title: "Mapping EFSA's food consumption data with tmap"
 layout: post
-date: '2016-10-27 14:34:54'
+date: '2016-10-27 14:42:12'
 published: yes
 tags:
 - R
@@ -30,7 +30,7 @@ Institution or body.*
 The European Food Safety Authority collects food consumption data from all EU countries and and integrates them in their database. The data is based on country specific surveys, in which individuals get interviewed about their food consumption habits. This data is used for EFSA's risk assessments as part of the exposure assessment.
 
 # Accessing the data
-The data is available from EFSA's website http://www.efsa.europa.eu/en/food-consumption/comprehensive-database in form of Excel files.
+The data is available from EFSA's website <http://www.efsa.europa.eu/en/food-consumption/comprehensive-database> in form of Excel files.
 
 I selected for this tutorial the file of the "Chronic food consumption statistics" - "grams per day" - "all subjects".
 
