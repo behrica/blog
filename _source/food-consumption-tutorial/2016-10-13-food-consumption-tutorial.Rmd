@@ -4,6 +4,7 @@ layout: post
 date: '`r Sys.time()`'
 published: yes
 tags:
+- R
 - food consumption data
 - maps
 - EFSA
