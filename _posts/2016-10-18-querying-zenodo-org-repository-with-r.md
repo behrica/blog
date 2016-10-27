@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  Querying Zenodo.org repository with R
-date: "2016-10-27 15:19:59"
+date: "2016-10-27 15:56:29"
 published: true
 tags: 
    - OAI-PMH 
@@ -35,10 +35,10 @@ install.packages("oai")
 {% endhighlight %}
 
 The development version is available on Github at 
-https://github.com/ropensci/oai
+<https://github.com/ropensci/oai>
 
 
-
+The libraries I use in this tutorial are: 
 
 {% highlight r %}
 library(knitr)
@@ -88,25 +88,23 @@ Currently there are 18 records available.
 
 ## Statistics on keywords
 
+### Query records from Zenodo
+
 I was further on interested in the current distribution of keywords each record was tagged with. Zenodo supports two types of keywords. Simple free text keywords and 'subjects'.
 Subjects need to come from  a controlled vocabulary, in which each topic has an URI.
 
-EFSA uses the GACS vocabulary, and so a certain topic is represented as for example 'http://browser.agrisemantics.org/gacs/en/page/C2225' is the code for 'salmonella'.
+EFSA uses the [GACS](http://browser.agrisemantics.org/gacs/en/) vocabulary, and so a certain topic 'salmonella' is represented as URI 'http://browser.agrisemantics.org/gacs/en/page/C2225'.
 
-The API returns therefore for the subjects only the code, which is nicely unique and clear but not user friendly.
+The API returns therefore for the subjects only the URI, which is nicely unique and clear but not user friendly as a label. On the URI of each 'subject', additional information is available.
 
-The following code retrieves all records and extract all their subjects (which have a Xpath of //d3:subject).
 
-I use the 'map' function from the purrr package to apply to every vector in the result (which is first an xml string) a number of transformations:
 
-1.  read_xml() - to convert from string to class xml_document
-2.  xml_find_all() - to find xml nodes give by xpath expression
-3.  xml_text() - get the text from inside the xml node
- 
- Then I combine all this via c() and the reduce() function to a single list of all subjects.
- The table() command produces then a frequency table for them:
- 
- 
+The following code retrieves all records and extract all their subjects (which have a Xpath of //d3:subject). The current oai package has some problems with some Zenodo specific metadata,
+so I parse the raw XML by hand.
+
+The OIA-PMH standard and the oai::get_records function, allow the client to select, in which metadata format he wants to receive the metadata.
+Here I have selected 'oai-datacite', because it is recommended from the 
+Zenodo API [documenation](https://zenodo.org/dev#harvest-metadata) and should contain *all* metadata Zenodo supports, while other metadata formats might only support a smaller subset.
 
 
 {% highlight r %}
@@ -118,28 +116,40 @@ keyword_counts <- record_data_xml %>%
     reduce(c) %>%
     table() %>%
     tbl_df()
-kable(keyword_counts[10:20,])
+kable(keyword_counts %>% filter(grepl(".*C22.*|^food",`.`)))
 {% endhighlight %}
 
 
 
-|.                      |  n|
-|:----------------------|--:|
-|chronic risk assesment |  2|
-|commodities            |  1|
-|comparative analysis   |  1|
-|control                |  1|
-|decision tree          |  1|
-|deterministic models   |  1|
-|Emerging risks         |  1|
-|empirical model        |  1|
-|epidemiology           |  1|
-|Epidemiology           |  2|
-|equivalence testing    |  1|
+|.                                       |  n|
+|:---------------------------------------|--:|
+|food additives                          |  1|
+|food additives intake model             |  1|
+|food composition difference testing     |  1|
+|http://id.agrisemantics.org/gacs/C22070 |  2|
+|http://id.agrisemantics.org/gacs/C22092 |  1|
+|http://id.agrisemantics.org/gacs/C2225  |  3|
 
-To add a human readable label to each GACS URI, I use the gacs API which allows to query information on each topic.
+I use the 'map' function from the 'purrr' package to apply to every vector in the result (which is first an xml string) a number of transformations:
+
+1.  read_xml() - to convert from string to class xml_document
+2.  xml_find_all() - to find all xml nodes given by xpath expression
+3.  xml_text() - get the text from the xml node
+ 
+ Then I combine all this via c() and the reduce() function to obtain a single list of all subjects.
+ 
+ The API returns both types of subjects, the generic keywords and the terms referring to a controlled vocabulary.
+ 
+ The table() command produces then a frequency table for them, of which I show here a subset.
+ We have in this table entries with an English label, and some with the GACS URI.
+ 
+### Add human readable label to GACS topics
+
+
+To add a human readable label to each GACS URI, I use the GACS API which allows to query information on each topic.
 So I call the API for each URI and make a table where each row contains a list of (URI,label). This gets the converted into a table with bind_rows()
 
+I use again the 'map' function with an anonymous function, which does the call to the GACS API. GACS uses the (Skomsos)[https://github.com/NatLibFi/Skosmos] software, so has an (API)[http://api.finto.fi/doc/] to query the vocabulary.
                                         
 
 {% highlight r %}
@@ -164,6 +174,8 @@ kable(gacs_label_en[1:5,])
 |http://id.agrisemantics.org/gacs/C12237 |flavourings                  |
 |http://id.agrisemantics.org/gacs/C1263  |screening                    |
 |http://id.agrisemantics.org/gacs/C14046 |emerging infectious diseases |
+
+
 
 ## Distributions of labels in efsa-pilot community
 
@@ -213,7 +225,10 @@ knitr::kable(table %>% slice(1:20))
 |bovine spongiform encephalopathy - http://id.agrisemantics.org/gacs/C14182 |     2|
 |calculation - http://id.agrisemantics.org/gacs/C15337                      |     2|
 
-# session info
+To monitor regularly this distribution can help in keeping the list of all keywords clean and eventually propose additional subjects to the GACS vocabulary.
+
+
+# Session info
 
 {% highlight r %}
 sessionInfo()
