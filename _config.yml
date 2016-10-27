@@ -1,5 +1,5 @@
 # Site settings
-title: Carsten's R blog
+title: Carsten's blog
 email: carsten.behring@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
   My personal blog on R, data science and open data.
