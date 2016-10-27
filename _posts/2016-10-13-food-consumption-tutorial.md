@@ -1,7 +1,7 @@
 ---
 title: "Mapping EFSA's food consumption data with tmap"
 layout: post
-date: '2016-10-27 14:09:50'
+date: '2016-10-27 14:34:54'
 published: yes
 tags:
 - R
@@ -234,17 +234,6 @@ jam <- jam %>%
 Europe.jam <- append_data(Europe.eu,as.data.frame(jam),key.shp = 'name',key.data = "Country")
 Europe.jam$income_grp <- as.character(Europe.jam$income_grp)
 write_shape(Europe.jam,"europe_jam.shp")
-{% endhighlight %}
-
-
-
-{% highlight text %}
-## Error: shpname is not a Spatial object
-{% endhighlight %}
-
-
-
-{% highlight r %}
 zip("europe_jam_shp.zip",dir(".","europe_jam.*"))
 {% endhighlight %}
 
@@ -262,11 +251,7 @@ tm_shape(Europe.jam) +
   tm_format_Europe_wide()
 {% endhighlight %}
 
-
-
-{% highlight text %}
-## Error in bb(x[[shape.id[masterID]]]$shp): Incorrect x argument
-{% endhighlight %}
+![plot of chunk unnamed-chunk-9](/blog/figure/source/food-consumption-tutorial/2016-10-13-food-consumption-tutorial/unnamed-chunk-9-1.png)
 
 This map show, that France and Germany seems to be the top Jam consumers.
 
@@ -284,11 +269,7 @@ tm_shape(Europe.jam) +
     tm_format_Europe_wide()
 {% endhighlight %}
 
-
-
-{% highlight text %}
-## Error in bb(x[[shape.id[masterID]]]$shp): Incorrect x argument
-{% endhighlight %}
+![plot of chunk unnamed-chunk-10](/blog/figure/source/food-consumption-tutorial/2016-10-13-food-consumption-tutorial/unnamed-chunk-10-1.png)
 
 
 ## Showing multiple maps
@@ -361,11 +342,7 @@ tm_shape(Europe.4foods) +
   tm_format_Europe(legend.position = c("left","top"))
 {% endhighlight %}
 
-
-
-{% highlight text %}
-## Error in bb(x[[shape.id[masterID]]]$shp): Incorrect x argument
-{% endhighlight %}
+![plot of chunk unnamed-chunk-14](/blog/figure/source/food-consumption-tutorial/2016-10-13-food-consumption-tutorial/unnamed-chunk-14-1.png)
 
 # Map of people surveyed 
 An other type of information which can be extracted from the data set, is information about the food consumption surveys.
@@ -448,11 +425,7 @@ tm_shape(Europe.surveyed) +
   tm_format_Europe_wide()
 {% endhighlight %}
 
-
-
-{% highlight text %}
-## Error in bb(x[[shape.id[masterID]]]$shp): Incorrect x argument
-{% endhighlight %}
+![plot of chunk unnamed-chunk-17](/blog/figure/source/food-consumption-tutorial/2016-10-13-food-consumption-tutorial/unnamed-chunk-17-1.png)
 
 
 # Who eats most vegetables ?  
@@ -485,11 +458,7 @@ tm_shape(Europe.eu.veg) +
   tm_polygons(col='mean',palette='Greens',n = 10)
 {% endhighlight %}
 
-
-
-{% highlight text %}
-## Error in bb(x[[shape.id[masterID]]]$shp): Incorrect x argument
-{% endhighlight %}
+![plot of chunk unnamed-chunk-19](/blog/figure/source/food-consumption-tutorial/2016-10-13-food-consumption-tutorial/unnamed-chunk-19-1.png)
 
 # Interactive map
 
@@ -544,30 +513,31 @@ sessionInfo()
 ## [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
 ## 
 ## attached base packages:
-## [1] stats     graphics  grDevices utils     datasets  base     
+## [1] methods   stats     graphics  grDevices utils     datasets 
+## [7] base     
 ## 
 ## other attached packages:
 ##  [1] pander_0.6.0    readxl_0.1.1    knitr_1.14      dplyr_0.5.0    
 ##  [5] purrr_0.2.2     readr_1.0.0     tidyr_0.6.0     tibble_1.2     
-##  [9] ggplot2_2.1.0   tidyverse_1.0.0 tmap_1.4-1     
+##  [9] ggplot2_2.1.0   tidyverse_1.0.0 tmap_1.6       
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] gtools_3.5.0       splines_3.2.2      lattice_0.20-33   
 ##  [4] colorspace_1.2-7   htmltools_0.3.5    XML_3.98-1.4      
 ##  [7] e1071_1.6-7        DBI_0.5-1          sp_1.2-3          
 ## [10] RColorBrewer_1.1-2 plyr_1.8.4         stringr_1.1.0     
-## [13] rgeos_0.3-20       munsell_0.4.3      gtable_0.2.0      
+## [13] rgeos_0.3-21       munsell_0.4.3      gtable_0.2.0      
 ## [16] raster_2.5-8       osmar_1.1-7        htmlwidgets_0.7   
 ## [19] coda_0.18-1        evaluate_0.10      labeling_0.3      
-## [22] httpuv_1.3.3       class_7.3-14       spdep_0.6-8       
-## [25] highr_0.6          methods_3.2.2      Rcpp_0.12.7       
+## [22] httpuv_1.3.3       cartogram_0.0.2    class_7.3-14      
+## [25] spdep_0.6-8        highr_0.6          Rcpp_0.12.7       
 ## [28] KernSmooth_2.23-15 geosphere_1.5-5    scales_0.4.0      
 ## [31] classInt_0.1-23    formatR_1.4        gdata_2.17.0      
 ## [34] leaflet_1.0.1      deldir_0.1-12      servr_0.4         
 ## [37] digest_0.6.10      stringi_1.1.2      gmodels_2.16.2    
 ## [40] grid_3.2.2         rgdal_1.1-10       tools_3.2.2       
 ## [43] bitops_1.0-6       LearnBayes_2.15    magrittr_1.5      
-## [46] RCurl_1.95-4.8     lazyeval_0.2.0     MASS_7.3-45       
+## [46] lazyeval_0.2.0     RCurl_1.95-4.8     MASS_7.3-45       
 ## [49] Matrix_1.2-7.1     assertthat_0.1     R6_2.2.0          
 ## [52] boot_1.3-18        nlme_3.1-128
 {% endhighlight %}
