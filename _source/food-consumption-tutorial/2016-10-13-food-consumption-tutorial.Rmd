@@ -30,6 +30,7 @@ library(tidyverse)
 library(knitr)
 library(readxl)
 library(pander)
+library(tmaptools)
 
 data(Europe)
 

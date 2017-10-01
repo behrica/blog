@@ -1,7 +1,7 @@
 ---
 title: "Mapping EFSA's food consumption data with tmap"
 layout: post
-date: '2016-10-27 14:42:12'
+date: '2017-10-01 10:49:18'
 published: yes
 tags:
 - R
@@ -99,7 +99,7 @@ data %>% filter(Foodex_L4 == 'Couscous') %>%
 ## $ P95          <dbl> 0
 ## $ P97_5        <dbl> 0
 ## $ P99          <dbl> 56
-## $ Comment      <dbl> NA
+## $ Comment      <lgl> NA
 {% endhighlight %}
 in the following way:
 
@@ -500,9 +500,13 @@ sessionInfo()
 
 
 {% highlight text %}
-## R version 3.2.2 (2015-08-14)
+## R version 3.4.1 (2017-06-30)
 ## Platform: x86_64-pc-linux-gnu (64-bit)
-## Running under: Ubuntu 15.10
+## Running under: Arch Linux
+## 
+## Matrix products: default
+## BLAS: /usr/lib/libblas_nehalemp-r0.2.19.so
+## LAPACK: /usr/lib/liblapack.so.3.7.1
 ## 
 ## locale:
 ##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
@@ -517,29 +521,47 @@ sessionInfo()
 ## [7] base     
 ## 
 ## other attached packages:
-##  [1] pander_0.6.0    readxl_0.1.1    knitr_1.14      dplyr_0.5.0    
-##  [5] purrr_0.2.2     readr_1.0.0     tidyr_0.6.0     tibble_1.2     
-##  [9] ggplot2_2.1.0   tidyverse_1.0.0 tmap_1.6       
+##  [1] bindrcpp_0.2      tmaptools_1.2-1   pander_0.6.1     
+##  [4] readxl_1.0.0      knitr_1.17        dplyr_0.7.3.9000 
+##  [7] purrr_0.2.3       readr_1.1.1       tidyr_0.7.1      
+## [10] tibble_1.3.4.9001 ggplot2_2.2.1     tidyverse_1.1.1  
+## [13] tmap_1.10        
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] gtools_3.5.0       splines_3.2.2      lattice_0.20-33   
-##  [4] colorspace_1.2-7   htmltools_0.3.5    XML_3.98-1.4      
-##  [7] e1071_1.6-7        DBI_0.5-1          sp_1.2-3          
-## [10] RColorBrewer_1.1-2 plyr_1.8.4         stringr_1.1.0     
-## [13] rgeos_0.3-21       munsell_0.4.3      gtable_0.2.0      
-## [16] raster_2.5-8       osmar_1.1-7        htmlwidgets_0.7   
-## [19] coda_0.18-1        evaluate_0.10      labeling_0.3      
-## [22] httpuv_1.3.3       cartogram_0.0.2    class_7.3-14      
-## [25] spdep_0.6-8        highr_0.6          Rcpp_0.12.7       
-## [28] KernSmooth_2.23-15 geosphere_1.5-5    scales_0.4.0      
-## [31] classInt_0.1-23    formatR_1.4        gdata_2.17.0      
-## [34] leaflet_1.0.1      deldir_0.1-12      servr_0.4         
-## [37] digest_0.6.10      stringi_1.1.2      gmodels_2.16.2    
-## [40] grid_3.2.2         rgdal_1.1-10       tools_3.2.2       
-## [43] bitops_1.0-6       LearnBayes_2.15    magrittr_1.5      
-## [46] lazyeval_0.2.0     RCurl_1.95-4.8     MASS_7.3-45       
-## [49] Matrix_1.2-7.1     assertthat_0.1     R6_2.2.0          
-## [52] boot_1.3-18        nlme_3.1-128
+##   [1] nlme_3.1-131       bitops_1.0-6       sf_0.5-4          
+##   [4] satellite_1.0.0    lubridate_1.6.0    httr_1.3.1        
+##   [7] webshot_0.4.1      gmodels_2.16.2     RColorBrewer_1.1-2
+##  [10] mapview_2.1.4      tools_3.4.1        rgdal_1.2-10      
+##  [13] R6_2.2.2           KernSmooth_2.23-15 lazyeval_0.2.0    
+##  [16] rgeos_0.3-23       DBI_0.7            colorspace_1.3-2  
+##  [19] raster_2.5-8       sp_1.2-5           tidyselect_0.2.0  
+##  [22] mnormt_1.5-5       leaflet_1.1.0      curl_2.8.1        
+##  [25] compiler_3.4.1     rvest_0.3.2        expm_0.999-2      
+##  [28] xml2_1.1.1         labeling_0.3       scales_0.5.0      
+##  [31] rmapshaper_0.3.0   classInt_0.1-24    psych_1.7.8       
+##  [34] stringr_1.2.0      digest_0.6.12      foreign_0.8-69    
+##  [37] R.utils_2.5.0      base64enc_0.1-3    dichromat_2.0-0   
+##  [40] pkgconfig_2.0.1    htmltools_0.3.6    highr_0.6         
+##  [43] jsonvalidate_1.0.0 htmlwidgets_0.9    rlang_0.1.2       
+##  [46] shiny_1.0.5        bindr_0.1          jsonlite_1.5      
+##  [49] crosstalk_1.0.0    gtools_3.5.0       spdep_0.6-15      
+##  [52] R.oo_1.21.0        RCurl_1.95-4.8     magrittr_1.5      
+##  [55] geosphere_1.5-5    Matrix_1.2-11      Rcpp_0.12.12      
+##  [58] munsell_0.4.3      R.methodsS3_1.7.1  stringi_1.1.5     
+##  [61] MASS_7.3-47        plyr_1.8.4         grid_3.4.1        
+##  [64] parallel_3.4.1     gdata_2.18.0       forcats_0.2.0     
+##  [67] udunits2_0.13      deldir_0.1-14      lattice_0.20-35   
+##  [70] haven_1.1.0        splines_3.4.1      hms_0.3           
+##  [73] pillar_0.0.0.9000  boot_1.3-20        gdalUtils_2.0.1.7 
+##  [76] geojsonlint_0.2.0  reshape2_1.4.2     codetools_0.2-15  
+##  [79] stats4_3.4.1       LearnBayes_2.15    osmar_1.1-7       
+##  [82] servr_0.7          XML_3.98-1.9       glue_1.1.1        
+##  [85] evaluate_0.10.1    V8_1.5             modelr_0.1.1      
+##  [88] png_0.1-7          httpuv_1.3.5       foreach_1.4.3     
+##  [91] cellranger_1.1.0   gtable_0.2.0       assertthat_0.2.0  
+##  [94] mime_0.5           xtable_1.8-2       broom_0.4.2       
+##  [97] e1071_1.6-8        coda_0.19-1        class_7.3-14      
+## [100] viridisLite_0.2.0  iterators_1.0.8    units_0.4-6
 {% endhighlight %}
 
 # References

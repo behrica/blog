@@ -1,72 +1,110 @@
 "label","count"
 "risk assessment - http://id.agrisemantics.org/gacs/C1470",8
-"exposure assessment - http://id.agrisemantics.org/gacs/C29232",5
-"quantitative analysis - http://id.agrisemantics.org/gacs/C603",5
+"quantitative analysis - http://id.agrisemantics.org/gacs/C603",7
+"exposure assessment - http://id.agrisemantics.org/gacs/C29232",6
+"population - http://id.agrisemantics.org/gacs/C2955",5
 "prion diseases - http://id.agrisemantics.org/gacs/C18728",4
 "pesticides - http://id.agrisemantics.org/gacs/C284",4
 "Apoidea - http://id.agrisemantics.org/gacs/C1932",3
-"population - http://id.agrisemantics.org/gacs/C2955",3
+"Salmonella - http://id.agrisemantics.org/gacs/C2225",3
 "pesticide residues - http://id.agrisemantics.org/gacs/C3009",3
 "linear models - http://id.agrisemantics.org/gacs/C3504",3
+"model validation - http://id.agrisemantics.org/gacs/C4332",3
+"time - http://id.agrisemantics.org/gacs/C4525",3
 "pollinators - http://id.agrisemantics.org/gacs/C5325",3
+"decision support systems - http://id.agrisemantics.org/gacs/C8154",3
 "acute risk assesment",2
 "chronic risk assesment",2
+"Epidemiology",2
+"exposure assessment",2
 "bovine spongiform encephalopathy - http://id.agrisemantics.org/gacs/C14182",2
 "calculation - http://id.agrisemantics.org/gacs/C15337",2
+"epidemiology - http://id.agrisemantics.org/gacs/C155",2
 "mathematical models - http://id.agrisemantics.org/gacs/C162",2
-"Salmonella - http://id.agrisemantics.org/gacs/C2225",2
+"nonlinear models - http://id.agrisemantics.org/gacs/C17847",2
+"stochastic models - http://id.agrisemantics.org/gacs/C22070",2
+"simulation - http://id.agrisemantics.org/gacs/C3371",2
 "disease surveillance - http://id.agrisemantics.org/gacs/C5056",2
-"decision support systems - http://id.agrisemantics.org/gacs/C8154",2
+"viruses - http://id.agrisemantics.org/gacs/C656",2
+"vector-borne diseases - http://id.agrisemantics.org/gacs/C7502",2
+"analytical methods - http://id.agrisemantics.org/gacs/C806",2
+"spatial distribution - http://id.agrisemantics.org/gacs/C918",2
+"Modelling",2
+"multi-compartment model",2
 "Regulation (EC) No 396/2005",2
-"",1
+"risk assessment",2
+"screening",2
+"analysis model",1
 "animal health",1
+"Approximate Bayesian computation",1
+"Bayesian methods",1
 "biological hazards",1
 "bystander",1
 "calculator",1
 "commodities",1
 "comparative analysis",1
+"control",1
 "decision tree",1
+"deterministic models",1
 "Emerging risks",1
+"empirical model",1
+"epidemiology",1
 "equivalence testing",1
 "estimation",1
 "European Prospective Investigation into Cancer and Nutrition (EPIC)",1
 "exposure",1
-"exposure assessment",1
+"food additives",1
+"food additives intake model",1
 "food composition difference testing",1
 "genetically modified organisms",1
 "guidance",1
+"Bayesian theory - http://id.agrisemantics.org/gacs/C10152",1
 "commodities - http://id.agrisemantics.org/gacs/C10826",1
 "flavourings - http://id.agrisemantics.org/gacs/C12237",1
+"screening - http://id.agrisemantics.org/gacs/C1263",1
 "emerging infectious diseases - http://id.agrisemantics.org/gacs/C14046",1
 "scrapie - http://id.agrisemantics.org/gacs/C16365",1
 "maximum residue limits - http://id.agrisemantics.org/gacs/C16651",1
 "eggs - http://id.agrisemantics.org/gacs/C1895",1
+"food additives - http://id.agrisemantics.org/gacs/C1963",1
 "genetically modified organisms - http://id.agrisemantics.org/gacs/C2137",1
 "mechanistic models - http://id.agrisemantics.org/gacs/C22092",1
 "workers - http://id.agrisemantics.org/gacs/C2561",1
+"pork - http://id.agrisemantics.org/gacs/C2697",1
 "groups - http://id.agrisemantics.org/gacs/C28776",1
 "operators - http://id.agrisemantics.org/gacs/C30983",1
-"simulation - http://id.agrisemantics.org/gacs/C3371",1
-"time - http://id.agrisemantics.org/gacs/C4525",1
+"simulation models - http://id.agrisemantics.org/gacs/C348",1
+"http://id.agrisemantics.org/gacs/C5318",1
 "qualitative analysis - http://id.agrisemantics.org/gacs/C7719",1
-"analytical methods - http://id.agrisemantics.org/gacs/C806",1
 "disease reservoirs - http://id.agrisemantics.org/gacs/C8385",1
 "Monte Carlo method - http://id.agrisemantics.org/gacs/C9384",1
+"uncertainty - http://id.agrisemantics.org/gacs/C9413",1
 "storage - http://id.agrisemantics.org/gacs/C965",1
 "http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#C53331",1
+"individual",1
+"Markov Chain Monte Carlo",1
+"Markov Chain Monte Carlo (MCMC)",1
 "maximum residue levels",1
 "operator",1
 "pesticides",1
+"pig meat",1
+"pigs",1
 "plant health",1
 "plant protection",1
+"prevention",1
 "products",1
+"QMRA",1
 "resident",1
-"risk assessment",1
+"Salmonella",1
 "Salmonella Enteritidis",1
-"screening",1
+"Schmallenberg virus",1
+"Schmallenberg virus (SBV)",1
+"simulation models",1
 "Smoke Flavouring",1
 "source attribution",1
 "storage time",1
 "table eggs",1
 "Theoretical Added Maximum Daily Intake (TAMDI)",1
+"Under-ascertainment",1
+"Vector-borne disease",1
 "worker",1

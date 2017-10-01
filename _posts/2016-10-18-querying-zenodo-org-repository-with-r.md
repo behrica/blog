@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  Querying Zenodo.org repository with R
-date: "2016-10-27 15:56:29"
+date: "2017-10-01 10:49:42"
 published: true
 tags: 
    - OAI-PMH 
@@ -237,9 +237,13 @@ sessionInfo()
 
 
 {% highlight text %}
-## R version 3.2.2 (2015-08-14)
+## R version 3.4.1 (2017-06-30)
 ## Platform: x86_64-pc-linux-gnu (64-bit)
-## Running under: Ubuntu 15.10
+## Running under: Arch Linux
+## 
+## Matrix products: default
+## BLAS: /usr/lib/libblas_nehalemp-r0.2.19.so
+## LAPACK: /usr/lib/liblapack.so.3.7.1
 ## 
 ## locale:
 ##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
@@ -253,19 +257,27 @@ sessionInfo()
 ## [1] stats     graphics  grDevices utils     datasets  base     
 ## 
 ## other attached packages:
-##  [1] xml2_1.0.0      oai_0.2.1.9100  httr_1.2.1      dplyr_0.5.0    
-##  [5] purrr_0.2.2     readr_1.0.0     tidyr_0.6.0     tibble_1.2     
-##  [9] ggplot2_2.1.0   tidyverse_1.0.0 knitr_1.14     
+##  [1] bindrcpp_0.2      xml2_1.1.1        oai_0.2.2        
+##  [4] httr_1.3.1        dplyr_0.7.3.9000  purrr_0.2.3      
+##  [7] readr_1.1.1       tidyr_0.7.1       tibble_1.3.4.9001
+## [10] ggplot2_2.2.1     tidyverse_1.1.1   knitr_1.17       
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_0.12.7      servr_0.4        magrittr_1.5    
-##  [4] munsell_0.4.3    colorspace_1.2-7 R6_2.2.0        
-##  [7] highr_0.6        stringr_1.1.0    plyr_1.8.4      
-## [10] tools_3.2.2      grid_3.2.2       gtable_0.2.0    
-## [13] DBI_0.5-1        lazyeval_0.2.0   digest_0.6.10   
-## [16] assertthat_0.1   formatR_1.4      evaluate_0.10   
-## [19] stringi_1.1.2    methods_3.2.2    scales_0.4.0    
-## [22] httpuv_1.3.3
+##  [1] Rcpp_0.12.12      highr_0.6         cellranger_1.1.0 
+##  [4] pillar_0.0.0.9000 compiler_3.4.1    plyr_1.8.4       
+##  [7] bindr_0.1         methods_3.4.1     forcats_0.2.0    
+## [10] tools_3.4.1       digest_0.6.12     lubridate_1.6.0  
+## [13] jsonlite_1.5      evaluate_0.10.1   nlme_3.1-131     
+## [16] gtable_0.2.0      lattice_0.20-35   pkgconfig_2.0.1  
+## [19] rlang_0.1.2       psych_1.7.8       parallel_3.4.1   
+## [22] haven_1.1.0       stringr_1.2.0     hms_0.3          
+## [25] tidyselect_0.2.0  grid_3.4.1        glue_1.1.1       
+## [28] R6_2.2.2          readxl_1.0.0      foreign_0.8-69   
+## [31] modelr_0.1.1      reshape2_1.4.2    magrittr_1.5     
+## [34] servr_0.7         scales_0.5.0      rvest_0.3.2      
+## [37] assertthat_0.2.0  mnormt_1.5-5      colorspace_1.3-2 
+## [40] httpuv_1.3.5      stringi_1.1.5     lazyeval_0.2.0   
+## [43] munsell_0.4.3     broom_0.4.2
 {% endhighlight %}
 
 
