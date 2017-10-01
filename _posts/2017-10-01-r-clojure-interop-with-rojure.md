@@ -1,7 +1,7 @@
 ---
-title: "R Clojure Interop With rojure"
+title: "New library 'rojure' for Clojure<->R interop"
 layout: post
-date: '2017-10-01 11:32:49'
+date: '2017-10-01 11:40:42'
 published: yes
 tags:
 - clojure
@@ -29,4 +29,9 @@ as well.
 The first version is released on clojars:
 <https://clojars.org/rojure>
 
+The code is available on GitHub : <https://github.com/behrica/rojure>
+
 As it is only a small modification from rincanter, it should be rather stable already.
+
+
+I welcome every type of commnents in the issues: <https://github.com/behrica/rojure/issues>
